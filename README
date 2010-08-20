@@ -1,14 +1,13 @@
-This Rack middleware (external-uri-loader.rb) stands on its own.
-It is intended to serve an external Web resource as though it were local,
-allowing further transmogrification.
+This Rack middleware (external-uri-loader.rb) is intended to serve an
+external Web resource as though it were local, allowing further
+transmogrification.
 
 If you set your rails app to serve a view as text rather than as html,
 
-  render :text => "http://ebay.com", :content_type => "text/plain"
+  render :text => "http://www.yahoo.com", :content_type => "text/plain"
 
 then this middleware assumes you are giving it a URL.  The middleware fetches
-the URL and serves up the resource in the context of your application (rather
-than redirecting you to that URL).
+the URL and serves up the resource in that view of your application.
 
 (techiferous's rack-plastic, http://github.com/techiferous/rack-plastic,
 is a complementary middleware which you could use to facilitate further
