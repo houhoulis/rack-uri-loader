@@ -11,8 +11,13 @@ class TommyBoyController < ApplicationController
     render :text => 'ebay.html' # , :content_type => 'text/plain'
   end
 
-  def mcr
+  def mattknox
     render :text => "http://mattknox.com", :content_type => "text/plain"
+  end
+
+  def mcr
+    render :text => "http://masscomputerrelief.com",
+      :content_type => "text/plain"
   end
 
 end
