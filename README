@@ -1,0 +1,7 @@
+This Rack middleware (external-uri-loader.rb) stands on its own.
+It is intended to serve an external Web resource as though it were local,
+allowing further transmogrification.
+
+techiferous's <a href="http://github.com/techiferous/rack-plastic">
+rack-plastic</a> is a complementary, foundation middleware for
+easily performing subsequent Nokogiri manipulation of the page to be rendered.
