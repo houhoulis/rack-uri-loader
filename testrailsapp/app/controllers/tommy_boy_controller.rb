@@ -26,4 +26,8 @@ class TommyBoyController < ApplicationController
       :content_type => "text/plain"
   end
 
+  def headers
+    response.headers.store('URI_Loader_Param', 'http://techiferous.com')
+  end
+
 end
