@@ -17,9 +17,9 @@ Rails::Initializer.run do |config|
   # -- all .rb files in that directory are automatically loaded.
 
 #  config.middleware.use Rack::Reloader
-  config.middleware.use Rack::ExternalURILoader
 #  config.middleware.use Rack::Intro
   config.middleware.use Rack::L337
+  config.middleware.use Rack::ExternalURILoader
 #  config.middleware.use Rack::Initial
 #  config.middleware.use Rack::Stylizer
 
