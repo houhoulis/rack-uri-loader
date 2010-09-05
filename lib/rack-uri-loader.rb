@@ -13,9 +13,9 @@ module Rack
     def call(env) #:nodoc
       @request = Rack::Request.new(env)
       status, @headers, @body = @app.call(env)
-      if text_response? && rails_response?
+      if rails_response? && text_response?
 
-        puts status.to_s + " ===== and headers #{@headers},\n
+        puts status.to_s + " ===== and headers #{@headers.to_s[0,180]},\n
           ========== @body.inspect.to_s[0,180] #{@body.inspect.to_s[0,180]}, and\n
           ========== @body.body.class #{@body.body.class}.\n"
         puts "===== @body.body.to_s == " + @body.body.to_s
@@ -30,13 +30,14 @@ module Rack
       [status, @headers, @body]
     end
 
-    def text_response?
-      @headers["Content-Type"] && @headers["Content-Type"].include?("text/plain")
+    def rails_response?
+      (@body.class.name == "ActionController::Response" ||
+        @body.class.name == "ActionDispatch::Response") &&
+        @body.body
     end
 
-    def rails_response?
-      @body.class.name == "ActionController::Response" && @body.body
-#			@body.is_a? Rails::ActionController::Response
+    def text_response?
+      @headers["Content-Type"] && @headers["Content-Type"].include?("text/plain")
     end
 
     def doc_to_string(doc)

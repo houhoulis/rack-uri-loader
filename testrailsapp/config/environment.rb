@@ -5,11 +5,8 @@ RAILS_GEM_VERSION = '2.3.8' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
-#require File.join(File.dirname(__FILE__), '..', '..', 'middlewares', 'initial')
-#require File.join(File.dirname(__FILE__), '..', '..', 'middlewares', 'intro')
 require File.join(File.dirname(__FILE__), '..', '..', 'lib', 'l337')
-require File.join(File.dirname(__FILE__), '..', '..', 'lib', 'external-uri-loader')
-#require File.join(File.dirname(__FILE__), '..', '..', 'middlewares', 'stylizer')
+require File.join(File.dirname(__FILE__), '..', '..', 'lib', 'rack-uri-loader')
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
@@ -17,11 +14,8 @@ Rails::Initializer.run do |config|
   # -- all .rb files in that directory are automatically loaded.
 
 #  config.middleware.use Rack::Reloader
-#  config.middleware.use Rack::Intro
   config.middleware.use Rack::L337
   config.middleware.use Rack::ExternalURILoader
-#  config.middleware.use Rack::Initial
-#  config.middleware.use Rack::Stylizer
 
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/extras )

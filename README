@@ -1,4 +1,4 @@
-This Rack middleware (external-uri-loader.rb) is intended to serve an
+This Rack middleware (rack-uri-loader.rb) is intended to serve an
 external Web resource as though it were local, allowing further
 transmogrification.
 
