@@ -26,4 +26,8 @@ class TommyBoyController < ApplicationController
       :content_type => "text/plain"
   end
 
+  def env
+    ENV['URL_Loader_Param'] = 'http://masscomputerrelief.com'
+  end
+
 end
