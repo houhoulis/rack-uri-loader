@@ -13,18 +13,15 @@ module Rack
     def call(env) #:nodoc
       @request = Rack::Request.new(env)
       status, @headers, @body = @app.call(env)
-      if rails_response? && text_response?
+      if rails_response? && uri_loader_header?
 
-        puts status.to_s + " ===== and headers #{@headers.to_s[0,180]},\n
-          ========== @body.inspect.to_s[0,180] #{@body.inspect.to_s[0,180]}, and\n
-          ========== @body.body.class #{@body.body.class}.\n"
-        puts "===== @body.body.to_s == " + @body.body.to_s
-        puts "===== fetched_doc is via URI."
+        puts status.to_s + "===== headers #{@headers.to_s[0,380]}"
+        puts "===== fetching via HTTP header param."
 
-        fetched_doc = open(@body.body)
-        fetched_string = Nokogiri::HTML(doc_to_string(fetched_doc))
+        fetched_string = Nokogiri::HTML(open(@headers["URI_Loader_Param"]))
         @body.body = fetched_string.to_html
         @headers["Content-Type"] = "text/html"
+        @headers["URI_Loader_Param"].delete
         update_content_length
       end
       [status, @headers, @body]
@@ -36,8 +33,8 @@ module Rack
         @body.body
     end
 
-    def text_response?
-      @headers["Content-Type"] && @headers["Content-Type"].include?("text/plain")
+    def uri_loader_header?
+      @headers["URI_Loader_Param"]
     end
 
     def doc_to_string(doc)
