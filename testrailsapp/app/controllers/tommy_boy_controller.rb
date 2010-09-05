@@ -15,4 +15,8 @@ class TommyBoyController < ApplicationController
     render :text => "http://mattknox.com", :content_type => "text/plain"
   end
 
+  def env
+    ENV['URL_Loader_Param'] = 'http://techiferous.com'
+  end
+
 end
