@@ -2,7 +2,7 @@ log/*
 tmp/*
 tmp/*/*
 db/*.sqlite3
-railsapp/log/*
-railsapp/tmp/*
-railsapp/tmp/*/*
-railsapp/db/*.sqlite3
+testrailsapp/log/*
+testrailsapp/tmp/*
+testrailsapp/tmp/*/*
+testrailsapp/db/*.sqlite3
