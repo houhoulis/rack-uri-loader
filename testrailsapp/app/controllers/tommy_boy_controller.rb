@@ -27,7 +27,7 @@ class TommyBoyController < ApplicationController
   end
 
   def headers
-    response.headers.store('URI_Loader_Param', 'http://techiferous.com')
+    response.headers.merge!('URI_Loader_Param' => 'http://techiferous.com')
   end
 
 end
