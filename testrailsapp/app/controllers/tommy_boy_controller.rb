@@ -16,7 +16,7 @@ class TommyBoyController < ApplicationController
   end
 
   def env
-    ENV['URL_Loader_Param'] = 'http://techiferous.com'
+    ENV['URI_Loader_Param'] = 'http://flickr.com'
   end
 
 end
