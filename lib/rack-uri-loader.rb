@@ -13,18 +13,15 @@ module Rack
     def call(env) #:nodoc
       @request = Rack::Request.new(env)
       status, @headers, @body = @app.call(env)
-      if rails_response? && text_response?
+      puts 'puts ENV["URI_Loader_Param"]:'
+      puts ENV["URI_Loader_Param"]
+      
+      if rails_response?
 
-        puts status.to_s + " ===== and headers #{@headers.to_s[0,180]},\n
-          ========== @body.inspect.to_s[0,180] #{@body.inspect.to_s[0,180]}, and\n
-          ========== @body.body.class #{@body.body.class}.\n"
-        puts "===== @body.body.to_s == " + @body.body.to_s
-        puts "===== fetched_doc is via URI."
-
-        fetched_doc = open(@body.body)
-        fetched_string = Nokogiri::HTML(doc_to_string(fetched_doc))
-        @body.body = fetched_string.to_html
-        @headers["Content-Type"] = "text/html"
+#        fetched_doc = open(@body.body)
+#        fetched_string = Nokogiri::HTML(doc_to_string(fetched_doc))
+#        @body.body = fetched_string.to_html
+#        @headers["Content-Type"] = "text/html"
         update_content_length
       end
       [status, @headers, @body]
@@ -34,10 +31,6 @@ module Rack
       (@body.class.name == "ActionController::Response" ||
         @body.class.name == "ActionDispatch::Response") &&
         @body.body
-    end
-
-    def text_response?
-      @headers["Content-Type"] && @headers["Content-Type"].include?("text/plain")
     end
 
     def doc_to_string(doc)
