@@ -16,12 +16,12 @@ module Rack
       if rails_response? && uri_loader_header?
 
         puts status.to_s + "===== headers #{@headers.to_s[0,380]}"
-        puts "===== fetching via HTTP header param " + @headers["URI_Loader_Param"]
+        puts "===== fetching via HTTP header param " + @headers["URI-Loader-Param"]
 
-        fetched_string = Nokogiri::HTML(open(@headers["URI_Loader_Param"]))
+        fetched_string = Nokogiri::HTML(open(@headers["URI-Loader-Param"]))
         @body.body = fetched_string.to_html
         @headers["Content-Type"] = "text/html"
-        @headers.delete("URI_Loader_Param")
+        @headers.delete("URI-Loader-Param")
         update_content_length
       end
       [status, @headers, @body]
@@ -34,7 +34,7 @@ module Rack
     end
 
     def uri_loader_header?
-      @headers["URI_Loader_Param"]
+      @headers["URI-Loader-Param"]
     end
 
     def doc_to_string(doc)
