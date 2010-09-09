@@ -16,12 +16,9 @@ module Rack
       puts 'puts ENV["URI_Loader_Param"]:'
       puts ENV["URI_Loader_Param"]
       
-      if rails_response?
-
-#        fetched_doc = open(@body.body)
-#        fetched_string = Nokogiri::HTML(doc_to_string(fetched_doc))
-#        @body.body = fetched_string.to_html
-#        @headers["Content-Type"] = "text/html"
+      if rails_response? && ENV_loader_param?
+        fetched_string = Nokogiri::HTML(open(ENV["URI_Loader_Param"]))
+        @body.body = fetched_string.to_html
         update_content_length
       end
       [status, @headers, @body]
@@ -31,6 +28,10 @@ module Rack
       (@body.class.name == "ActionController::Response" ||
         @body.class.name == "ActionDispatch::Response") &&
         @body.body
+    end
+
+    def ENV_loader_param?
+      ENV["URI_Loader_Param"]
     end
 
     def doc_to_string(doc)
