@@ -15,4 +15,8 @@ class TommyBoyController < ApplicationController
     render :text => "http://mattknox.com", :content_type => "text/plain"
   end
 
+  def headers
+    response.headers.merge!('URI-Loader-Param' => 'http://flickr.com')
+  end
+
 end
