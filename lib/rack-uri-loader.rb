@@ -10,7 +10,7 @@ module Rack
       @options = options
     end
 
-    def call(env) #:nodoc
+    def call(env) #:nodoc:
       @request = Rack::Request.new(env)
       status, @headers, @body = @app.call(env)
       if rails_response? && uri_loader_header?
