@@ -6,24 +6,45 @@ module Rack
 	class ExternalURILoader
 
     def initialize(app, options = {}) #:nodoc:
+      # options = { :method => "text_plain" || "http_header" || default = "env" }
       @app = app
-      @options = options
+      @method = options[:method]
     end
 
     def call(env) #:nodoc:
       @request = Rack::Request.new(env)
+      puts "pre app call: "
+      puts @body.body.to_s if @body && @body.body
       status, @headers, @body = @app.call(env)
-      if rails_response? && uri_loader_header?
+      puts "post app call: "
+      puts @body.body.to_s if @body && @body.body
+      puts
 
-        puts status.to_s + "===== headers #{@headers.to_s[0,380]}"
-        puts "===== fetching via HTTP header param " + @headers["URI-Loader-Param"]
-
-        fetched_string = Nokogiri::HTML(open(@headers["URI-Loader-Param"]))
-        @body.body = fetched_string.to_html
-        @headers["Content-Type"] = "text/html"
-        @headers.delete("URI-Loader-Param")
-        update_content_length
+      if !@method || ( @method == "env" ) # default
+        if rails_response? && ENV_loader_param?
+          uri = ENV.delete('URI_Loader_Param')
+          fetched_string = Nokogiri::HTML(open(uri))
+          @body.body = fetched_string.to_html
+        end
+      elsif @method == "http_header"
+        if rails_response? && uri_loader_header?
+          fetched_string = Nokogiri::HTML(open(@headers['URI-Loader-Param']))
+          @body.body = fetched_string.to_html
+          @headers.delete('URI-Loader-Param')
+        end
+      elsif @method == "text_plain"
+        if rails_response? && text_response?
+          uri = @body.body.to_s
+          fetched_string = Nokogiri::HTML(open(uri))
+          @body.body = fetched_string.to_html
+          @headers['Content-Type'] = 'text/html'
+        end
+      else
+        raise 'If you use rack-uri-loader with a :method option, it must ' +
+          'be either "env", "http_header", or "text_plain".  You passed in "' +
+          @method.to_s + '".'
       end
+      update_content_length
       [status, @headers, @body]
     end
 
@@ -33,8 +54,16 @@ module Rack
         @body.body
     end
 
+    def ENV_loader_param?
+      ENV["URI_Loader_Param"]
+    end
+
     def uri_loader_header?
       @headers["URI-Loader-Param"]
+    end
+
+    def text_response?
+      @headers["Content-Type"].include?("text/plain")
     end
 
     def doc_to_string(doc)

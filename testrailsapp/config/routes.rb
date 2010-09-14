@@ -4,4 +4,5 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'ebay', :controller => "tommy_boy", :action => "ebay"
   map.connect 'mattknox', :controller => "tommy_boy", :action => "mattknox"
   map.connect 'headers', :controller => "tommy_boy", :action => "headers"
+  map.connect 'env', :controller => "tommy_boy", :action => "env"
 end

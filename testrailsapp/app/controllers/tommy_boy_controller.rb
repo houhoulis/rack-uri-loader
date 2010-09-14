@@ -7,8 +7,8 @@ class TommyBoyController < ApplicationController
   end
 
   def ebay
-    render :text => 'This is the controller -- not ebay_html static file.',
-      :content_type => 'text/plain'
+    render :text => 'This is the controller -- not ebay_html static file.' # ,
+#      :content_type => 'text/plain'
   end
 
   def mattknox
@@ -17,6 +17,10 @@ class TommyBoyController < ApplicationController
 
   def headers
     response.headers.merge!('URI-Loader-Param' => 'http://flickr.com')
+  end
+
+  def env
+    ENV['URI_Loader_Param'] = 'http://flickr.com'
   end
 
 end
