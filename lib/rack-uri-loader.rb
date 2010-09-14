@@ -6,8 +6,9 @@ module Rack
 	class ExternalURILoader
 
     def initialize(app, options = {}) #:nodoc:
+      # options = { :method => "text_plain" || "http_header" || default = "env" }
       @app = app
-      @options = options
+      @method = options[:method]
     end
 
     def call(env) #:nodoc:
@@ -17,10 +18,11 @@ module Rack
       puts ENV["URI_Loader_Param"]
       
       if rails_response? && ENV_loader_param?
-        fetched_string = Nokogiri::HTML(open(ENV["URI_Loader_Param"]))
+        uri = ENV.delete('URI_Loader_Param')
+        fetched_string = Nokogiri::HTML(open(uri))
         @body.body = fetched_string.to_html
-        update_content_length
       end
+      update_content_length
       [status, @headers, @body]
     end
 
@@ -32,6 +34,10 @@ module Rack
 
     def ENV_loader_param?
       ENV["URI_Loader_Param"]
+    end
+
+    def text_response?
+      @headers["Content-Type"].include?("text/plain")
     end
 
     def doc_to_string(doc)
