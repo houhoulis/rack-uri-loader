@@ -1,0 +1,2 @@
+,
+      #   :strip => [ "html_tag_1", "html_tag_2", ... ]
