@@ -14,10 +14,12 @@ module Rack
     def call(env) #:nodoc:
       @request = Rack::Request.new(env)
       puts "pre app call: "
-      puts @body.body.to_s if @body && @body.body
+#      puts @body.body.to_s if @body && @body.body
+      puts @body.body.to_s if rails_response?
       status, @headers, @body = @app.call(env)
       puts "post app call: "
-      puts @body.body.to_s if @body && @body.body
+#      puts @body.body.to_s if @body && @body.body
+      puts @body.body.to_s if rails_response?
       puts
 
       if !@method || ( @method == "env" ) # default
