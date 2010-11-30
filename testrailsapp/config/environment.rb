@@ -15,7 +15,7 @@ Rails::Initializer.run do |config|
 
 #  config.middleware.use Rack::Reloader
   config.middleware.use Rack::L337
-  config.middleware.use Rack::ExternalURILoader
+  config.middleware.use Rack::ExternalURILoader, :method => 'http_header'
 
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/extras )

@@ -1,0 +1,13 @@
+
+- credit Wyatt Greene in each of his files (README, plus
+    lib/rack-uri-loader.rb, plus
+    testapp views, maybe)
+- rename ExternalURILoader class
+- README
+- change mattknox example to dooce?  or csszengarden.com?
+    http://csszengarden.com/?cssfile=/211/211.css&page=0
+
+- :strip => [ "html_tag_1", "html_tag_2", ... ]
+
+
+

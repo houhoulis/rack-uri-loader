@@ -6,12 +6,11 @@ class TommyBoyController < ApplicationController
   def more
   end
 
-  def ebay
-    render :text => 'This is the controller -- not ebay_html static file.' # ,
-#      :content_type => 'text/plain'
+  def text
+    render :text => 'This is the "text" controller -- not a static file.'
   end
 
-  def mattknox
+  def text_plain
     render :text => "http://mattknox.com", :content_type => "text/plain"
   end
 
